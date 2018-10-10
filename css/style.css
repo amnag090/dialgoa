@@ -1,0 +1,59 @@
+.card {
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.2);
+    padding: 6px 10px;
+}
+
+.card2 {
+    margin-top: 27px;
+    padding: 6px 10px;
+    border-width: 2px 10px 4px 20px;
+}
+
+.vertical-align {
+    vertical-align: top !important;
+}
+
+.theme-color {
+    color: #f78e90
+}
+
+.card2 p {
+    font-size: 16px;
+}
+
+.right {
+    float: right;
+}
+
+.theme-color-link {
+    color: #337ab7;
+}
+
+.mini {
+    font-size: 12px;
+}
+
+.top-height {
+    padding-top: 35px;
+}
+
+.amount {
+    margin-left: 10em;
+}
+
+.space {
+    margin-bottom: 2em;
+}
+
+@media(max-width:1345px) and (min-width:992px) {
+    .wrd-len {
+        margin-top: -21px;
+    }
+}
+
+
+
+
+/*  */
+/* Footer css */
+
