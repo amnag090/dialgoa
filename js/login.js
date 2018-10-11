@@ -1,11 +1,12 @@
-//var baseUrl = 'http://localhost/dialgoa/index.php/';
-var baseUrl = 'https://httest.in/dialgoa-mvc/index.php/';
+var baseUrl = 'http://localhost:8888/dialgoa-mvc/index.php/';
+// var baseUrl = 'https://httest.in/dialgoa-mvc/index.php/';
 //var baseUrl = 'http://34.216.213.132/dialgoa/index.php/';
 $(function () {
 	
 
 
 	$('#frm-login').on('submit',function(ev){
+		console.log('logiin');
 		$('#box-login-error').hide();
 		$.post(baseUrl+'login/logincheck',$("#frm-login").serialize(), function(resp){
 			if(resp.error){
@@ -14,7 +15,7 @@ $(function () {
 			} else {
 				window.location = "home";
 			}
-		}, 'json');
+		}, 'jsonp');
 		
 		return false;
 	});
