@@ -15,7 +15,7 @@ $(function () {
 			} else {
 				window.location = "home";
 			}
-		}, 'jsonp');
+		}, 'json');
 		
 		return false;
 	});

@@ -24,8 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-//$config['base_url']     = 'http://localhost/dialgoa';
-$config['base_url']     = 'https://httest.in/dialgoa-mvc/';
+$config['base_url']     = 'http://localhost:8888/dialgoa-mvc';
+// $config['base_url']     = 'https://httest.in/dialgoa-mvc/';
 
 $config['base_dir']     = getcwd()."/";
 

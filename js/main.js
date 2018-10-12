@@ -18,7 +18,10 @@ $(function () {
 			"columnDefs": [{ "orderable": false, "targets": 3 }]
 		});
 
-	$('.datepicker').datepicker({autoclose: true, format:"dd/mm/yyyy"});
+	$('.datepicker').datepicker({
+		autoclose: true,
+		 format:"dd/mm/yyyy",
+		});
 
 	
 
@@ -766,6 +769,147 @@ $(function () {
 	});
 	//-------------------------------------------------------------------------------------------------------
 
+	//============================================ FLEET MANAGEMENT ============================================
+
+
+	// list fleet
+	$('#datatable-listFleet').DataTable({
+		"lengthChange": false,
+		"columnDefs": [
+			{"orderable": false, "targets": [0,-1]},
+			// {"orderable": false, "targets": 10}
+		]
+	});
+	
+	// add fleet 
+	$('#frm-fleet-new').on('submit',function(){
+		$('#div-fleet-new-alert')
+					.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
+					.html("")
+					.hide();
+	
+			$.ajax({
+				type:$(this).attr('method'),
+				url:$(this).attr('action'),
+				data:$(this).serialize(),
+				dataType:'json',
+				success:function(resp){
+					if(resp.error){
+						$('#div-fleet-new-alert')
+							.addClass( "alert-error")
+							.html(resp.message)
+							.show();
+					} else {
+						$('#div-fleet-new-alert')
+							.addClass( "alert-success")
+							.html(resp.message)
+							.show();
+						setTimeout(function(){ window.history.back(); }, 500);
+					}
+				},
+				error:function(){
+					$('#div-fleet-new-alert')
+					.addClass( "alert-error")
+					.html("Error occured please try again.")
+					.show();
+	
+					return false;
+				}
+			});
+	
+	
+		return false;
+	});
+// assign id to be deleted to form modal
+	$('.btn-fleet-delete').on('click',function(){
+		var id =($(this).data('fleetid'));
+		$('#inpt-fleet-delete-id').val(id);
+		console.log($('#inpt-fleet-delete-id').val());
+	});
+
+	// delete fleet
+
+	$('#frm-fleet-delete').on('submit',function(){
+		$('#div-fleet-new-alert')
+					.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
+					.html("")
+					.hide();
+	
+			$.ajax({
+				type:$(this).attr('method'),
+				url:$(this).attr('action'),
+				data:$(this).serialize(),
+				dataType:'json',
+				success:function(resp){
+					$('#modal-fleet-delete').modal('hide');
+					if(resp.error){
+						$('#div-fleetmgt-list-alert')
+							.addClass( "alert-error")
+							.html(resp.message)
+							.show();
+					} else {
+						$('#div-fleetmgt-list-alert')
+							.addClass( "alert-success")
+							.html(resp.message)
+							.show();
+
+						setTimeout(function(){window.location.reload()}, 500);
+					}
+				},
+				error:function(){
+					$('#modal-fleet-delete').modal('hide');
+					$('#div-fleetmgt-list-alert')
+					.addClass( "alert-error")
+					.html("Error occured please try again.")
+					.show();
+	
+					return false;
+				}
+			});
+	
+	
+		return false;
+	});
+// edit fleet
+$('#frm-fleet-edit').on('submit',function(){
+	alert('dsvcds');
+	$('#div-fleet-edit-alert')
+				.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
+				.html("")
+				.hide();
+	$.ajax({
+		type:$(this).attr('method'),
+		url:$(this).attr('action'),
+		data:$(this).serialize(),
+		dataType:'json',
+		success:function(resp){
+				if(resp.error){
+					$('#div-fleet-edit-alert')
+					.addClass( "alert-error")
+					.html(resp.message)
+					.show();
+				} else {
+						$('#div-fleet-edit-alert')
+						.addClass( "alert-success")
+						.html(resp.message)
+						.show();
+						setTimeout(function(){ window.history.back(); }, 500);
+						}
+			},
+		error:function(){
+				$('#div-fleet-edit-alert')
+				.addClass( "alert-error")
+				.html("Error occured please try again.")
+				.show();
+				return false;
+			}
+
+		});
+			
+return false;
+});
+	
+	
 });//end of all functions
 
 function vendorStatusUpdate(vendorId, action){
@@ -808,63 +952,6 @@ function vendorStatusUpdate(vendorId, action){
 }
 
 
-//============================================ FLEET MANAGEMENT ============================================
 
 
-$('#datatable-listFleet').DataTable({
-    "lengthChange": false,
-    "columnDefs": [
-        {"orderable": false, "targets": [0,-1]},
-        // {"orderable": false, "targets": 10}
-    ]
-});
 
-
-$('#frm-fleet-new').on('submit',function(){
-    $('#div-fleet-new-alert')
-                .removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
-                .html("")
-                .hide();
-
-        $.ajax({
-            type:$(this).attr('method'),
-            url:$(this).attr('action'),
-            data:$(this).serialize(),
-            dataType:'json',
-            success:function(resp){
-                if(resp.error){
-                    $('#div-fleet-new-alert')
-                        .addClass( "alert-error")
-                        .html(resp.message)
-                        .show();
-                } else {
-                    $('#div-fleet-new-alert')
-                        .addClass( "alert-success")
-                        .html(resp.message)
-                        .show();
-                    setTimeout(function(){ window.history.back(); }, 500);
-                }
-            },
-            error:function(){
-                $('#div-fleet-new-alert')
-                .addClass( "alert-error")
-                .html("Error occured please try again.")
-                .show();
-
-                return false;
-            }
-        });
-
-
-    return false;
-});
-
-$(function(){
-$('.btn-fleet-delete').click(function(){
-	console.log('test');
-	console.log($(this).data('fleetid'));
-	// $('#inpt-fleet-delete-id').val($(this).data('fleetid'));
-	//$('#modal-cancpolicy-delete').modal('show');
-});
-
-});

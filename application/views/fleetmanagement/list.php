@@ -53,7 +53,7 @@
                                     <td><?php print $row->registration_no; ?></td>
                                     <td><?php print $row->owner_name; ?></td>
                                     <td><?php print $row->manufacture_company." ".$row->name; ?></td>
-                                    <td><?php print $row->seating_capacity; ?></td>
+                                    <td><?php print $row->id; ?></td>
                                     <td><?php ($row->self_drive == '1') ? print 'Yes': print 'No' ?></td>
                                     <td><?php  ($row->vacinity == '1') ? print 'Local': print 'Outstation' ?></td>
                                     <td><?php  ($row->ac == '1') ? print 'Yes': print 'No' ?></td>
@@ -69,7 +69,7 @@
                                     <td>
                                         <a href="<?php print site_url('FleetManagement/edit/'.$row->id); ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a> 
                                         &nbsp;&nbsp; 
-                                        <a href="#modal-fleet-delete" data-fleetid="<?php print $row->id; ?>" class="btn btn-danger btn-fleet-delete" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+                                        <a href="#modal-fleet-delete" id="fleet-delete" data-fleetid="<?=$row->id ?>" class="btn btn-danger btn-fleet-delete" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -89,11 +89,11 @@
 				</div>
 				<div class="modal-footer">
 					<form method="post" id="frm-fleet-delete" action="<?php print site_url('FleetManagement/delete'); ?>">
-						<input type="hidden" name="fleetId" value="" id="inpt-fleet-delete-id"/>
+						<input type="hidden" name="fleetId" id="inpt-fleet-delete-id"/>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>										
 					</form>
 				</div>
 			</div>
 		</div>
-	</div>
+</div>
