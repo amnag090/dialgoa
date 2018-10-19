@@ -287,8 +287,9 @@ $(function () {
 
 		jQuery("input[name^='fixedpoints']:checked").each(function(j) { 
 		   formData.append('fixedpoints['+j+']', $(this).val());
+		   console.log($(this).val());
 		});
-		
+
 		if ($('#point_status').val() == '' || $('#point_status').val() == null) {
 			alert("Please select status");
 			return false;
@@ -319,7 +320,7 @@ $(function () {
 						.addClass( "alert-success")
 						.html(resp.message)
 						.show();
-						setTimeout(function(){ window.location.reload(); }, 500);
+						setTimeout(function(){  }, 500);
 					}
 				},
 				error:function(data){
@@ -783,6 +784,7 @@ $(function () {
 	
 	// add fleet 
 	$('#frm-fleet-new').on('submit',function(){
+		console.log('came to add');
 		$('#div-fleet-new-alert')
 					.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
 					.html("")
@@ -794,9 +796,12 @@ $(function () {
 				data:$(this).serialize(),
 				dataType:'json',
 				success:function(resp){
+					console.log('came to success');
 					if(resp.error){
+						console.log('inside error');
+						console.log(resp);
 						$('#div-fleet-new-alert')
-							.addClass( "alert-error")
+							.addClass( "alert-error alert-dismissible")
 							.html(resp.message)
 							.show();
 					} else {
@@ -807,12 +812,12 @@ $(function () {
 						setTimeout(function(){ window.history.back(); }, 500);
 					}
 				},
-				error:function(){
+				error:function(error){
 					$('#div-fleet-new-alert')
 					.addClass( "alert-error")
-					.html("Error occured please try again.")
+					.html(error)
 					.show();
-	
+					console.log(error);
 					return false;
 				}
 			});
@@ -821,14 +826,15 @@ $(function () {
 		return false;
 	});
 // assign id to be deleted to form modal
-	$('.btn-fleet-delete').on('click',function(){
+	$('#fleet-delete').on('click',function(){
+		alert('vdsvsd');
 		var id =($(this).data('fleetid'));
+		alert(id);
 		$('#inpt-fleet-delete-id').val(id);
 		console.log($('#inpt-fleet-delete-id').val());
 	});
 
 	// delete fleet
-
 	$('#frm-fleet-delete').on('submit',function(){
 		$('#div-fleet-new-alert')
 					.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
@@ -870,13 +876,13 @@ $(function () {
 	
 		return false;
 	});
+
 // edit fleet
-$('#frm-fleet-edit').on('submit',function(){
-	alert('dsvcds');
+$('#fleet-edit').on('submit',function(){
 	$('#div-fleet-edit-alert')
-				.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
-				.html("")
-				.hide();
+			.removeClass( "alert-error alert-info alert-danger alert-succes alert-warning" )
+			.html("")
+			.hide();
 	$.ajax({
 		type:$(this).attr('method'),
 		url:$(this).attr('action'),
@@ -908,7 +914,131 @@ $('#frm-fleet-edit').on('submit',function(){
 			
 return false;
 });
+
+
+//select all tuples
+$("#chk-fleetmgt-list-head").change(function(){  //"select all" change
+		var status = this.checked; // "select all" checked status
+		$('.chk-fleetmgt-row').each(function(){ //iterate all listed checkbox items
+			this.checked = status; //change ".checkbox" checked status
+		});
+	});
 	
+// change fleet status
+$('#frm-fleet-status').on('submit',function(ev){
+	
+
+	var formData = new FormData();
+	formData.append('status',$('#sel-fleetmgt-action').val());
+	console.log($('#sel-fleetmgt-action').val()); // get selected status
+
+	jQuery("input[name^='chk']:checked").each(function(j) { 
+	   formData.append('fleet['+j+']', $(this).val());
+	   
+	});
+
+	if($('#sel-fleetmgt-action').val()=='' || $('#sel-fleetmgt-action').val() == null){
+		alert('PLease select an action');
+		return false;
+	}
+
+	var checkedBoxes = $('#frm-fleet-status input:checked').length;
+	console.log(checkedBoxes);
+	if(!checkedBoxes){
+		alert("Please select alteast one vehicle");
+		return false;
+	}
+
+	$('#div-fleetmgt-list-alert').hide();
+	Pace.track(function(){
+		$.ajax({
+			type:'post',
+			url:baseUrl+'FleetManagement/updateStatus',
+			data:formData,
+			contentType:false,
+			processData:false,
+			dataType:'json',
+			success:function(resp){
+					if(resp.error){
+						$('#div-fleetmgt-list-alert')
+							.addClass( "alert-error")
+							.html(resp.message)
+							.show();
+					}
+					else {
+						$('#div-fleetmgt-list-alert')
+							.addClass( "alert-success")
+							.html(resp.message)
+							.show();
+
+						setTimeout(function(){window.location.reload()}, 500);
+
+					}
+			},
+			error:function(error){
+				$('#div-fleetmgt-list-alert')
+							.addClass( "alert-error")
+							.html('Something went wrong. Please try again.')
+							.show();
+
+			}
+		});
+	});
+
+	return false;
+});
+	
+	// var formData = new FormData();
+	
+	// formData.append('status', $('#point_status').val());
+
+	// jQuery("input[name^='fixedpoints']:checked").each(function(j) { 
+	//    formData.append('fixedpoints['+j+']', $(this).val());
+	//    console.log($(this).val());
+	// });
+
+	// if ($('#point_status').val() == '' || $('#point_status').val() == null) {
+	// 	alert("Please select status");
+	// 	return false;
+	// }
+
+	// var checkedBoxes = $('#frm-fixedpoint-status input:checked').length;
+
+	// if (!checkedBoxes) {
+	// 	alert("Please select atleast one Point");
+	// 	return false;
+	// }
+
+	// $('#alert-error, #alert-success').hide();
+	// Pace.track(function(){
+	// 	$.ajax({
+	// 		type:'post',
+	// 		url:baseUrl+'fixedpoints/updateStatus',
+	// 		data:formData,
+	// 		contentType: false,
+	// 		processData: false,
+	// 		dataType:'json',
+	// 		success:function(resp){
+	// 			if(resp.failure){
+	// 				$('#message-alert-error').text("Failed to update status");
+	// 				$('#alert-error').show()
+	// 			} else {						
+	// 				$('#div-fixedpoint-list-alert')
+	// 				.addClass( "alert-success")
+	// 				.html(resp.message)
+	// 				.show();
+	// 				setTimeout(function(){  }, 500);
+	// 			}
+	// 		},
+	// 		error:function(data){
+	// 			$('#message-alert-error').text("Some error occured, please try again");
+	// 			$('#alert-error').show()
+	// 		}
+	// 	});
+	// });
+
+// 	return false;
+// });
 	
 });//end of all functions
 

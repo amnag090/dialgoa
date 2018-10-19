@@ -3,12 +3,20 @@
         <h1>Edit Fleet <small></small></h1>
     </section>
         <section class="content">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#add_fleet">Vehicle</a></li>
+            <li><a data-toggle="tab" href="#multimedia">Multimedia</a></li>
+            <li><a data-toggle="tab" href="#tariff">Tariff</a></li>
+            <li><a data-toggle="tab" href="#availability">Availability</a></li> 
+        </ul>
+
         <div class="alert alert-dismissible" id="div-fleet-edit-alert" style="display: none;"></div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form role="form" method="POST" action="<?php print site_url('FleetManagement/saveedit'); ?>" id="ffrm-fleet-edit" name="fleet_form">
+                        <form role="form" method="POST" action="<?php print site_url('FleetManagement/saveedit'); ?>" id="frm-fleet-edit" name="fleet_form">
+                        <div id="add_fleet" class="tab-pane fade in active">
                             <div class="row">
                                 <input name="vendor_admin_id" value="2" type="hidden">
                                 <input name="vehicle_id" value=" <?=$vehicle[0]->id ?>" type="hidden">
@@ -143,7 +151,7 @@
                                         <select name="fuel_type" id="fuel_type" class="form-control" required="">
                                             <option   value=""   disabled="">Select Fuel type</option>
                                             <option   value="0" >Petrol</option>
-                                            <option  value="1" >Diesel</option>
+                                            <option   value="1" >Diesel</option>
                                             <option   value="2" >CNG</option>  
                                         </select> 
                                     </div>
@@ -164,6 +172,17 @@
                                 </div>   
                             </div>
                         </form>
+                        </div>
+                        <div id="multimedia" class="tab-pane fade">
+                            <p>sdnjsdh</p>
+                        </div>  
+                        <div id="tariff" class="tab-pane fade">
+                            <p> gtdfgd</p>
+                        </div>
+                        <div id="availability" class="tab-pane fade">
+                            <p> aaagtdfgd</p>
+                        </div>
+                        
                     </div>
                     <!-- /.panel-body -->
                 </div>

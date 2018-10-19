@@ -41,6 +41,17 @@
 
         }
 
+        public function updateVehicleStatus($status,$fleetIds){
+            $this->db->set('status', $status);
+			$this->db->where_in('id', $fleetIds);
+			$res  = $this->db->update('vehicles');
+
+			//print $this->db->last_query();
+
+			return $res;
+
+        }
+
 
 
 

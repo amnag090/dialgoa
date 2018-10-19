@@ -44,6 +44,13 @@
 .space {
     margin-bottom: 2em;
 }
+.fade.in{
+    display: block !important; 
+}
+
+.fade {
+    display: none !important;
+}
 
 @media(max-width:1345px) and (min-width:992px) {
     .wrd-len {
